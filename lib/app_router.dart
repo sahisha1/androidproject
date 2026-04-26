@@ -4,8 +4,10 @@ import 'package:wellness_tracker/screens/login_screen.dart';
 import 'package:wellness_tracker/screens/signup_screen.dart';
 import 'package:wellness_tracker/screens/dashboard_screen.dart';
 import 'package:wellness_tracker/screens/profile_screen.dart';
-import 'package:wellness_tracker/screens/workout_placeholder.dart';
+import 'package:wellness_tracker/screens/workout_list_screen.dart';
+import 'package:wellness_tracker/screens/workout_detail_screen.dart';
 import 'package:wellness_tracker/screens/progress_placeholder.dart';
+
 
 class AppRouter {
   static GoRouter router = GoRouter(
@@ -34,13 +36,22 @@ class AppRouter {
       GoRoute(
         name: 'workouts',
         path: '/workouts',
-        builder: (context, state) => const WorkoutPlaceholderScreen(),
+        builder: (context, state) => const WorkoutListScreen(),
+      ),
+      GoRoute(
+        name: 'workout-detail',
+        path: '/workout/:id',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return WorkoutDetailScreen(workoutId: id);
+        },
       ),
       GoRoute(
         name: 'progress',
         path: '/progress',
         builder: (context, state) => const ProgressPlaceholderScreen(),
       ),
+
     ],
   );
 }

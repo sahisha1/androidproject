@@ -13,19 +13,26 @@ dependencies:
   # Firebase
   firebase_core: ^2.24.2
   firebase_auth: ^4.16.0
-  cloud_firestore: ^4.14.0
-  google_sign_in: ^6.1.0
   firebase_database: ^10.5.0
 
-  # UI
+  # UI & Animations
   google_fonts: ^6.1.0
   fluttertoast: ^8.2.4
+  lottie: ^3.1.0
 
   # Navigation
   go_router: ^13.0.0
 
   # Utilities
   intl: ^0.18.1
+  shared_preferences: ^2.2.3
+
+  # Video & Audio (Optional - for future use)
+  video_player: ^2.8.6
+  audioplayers: ^5.2.1
+  cached_network_image: ^3.3.1
+  percent_indicator: ^4.2.3
+  confetti: ^0.7.0
 
 dev_dependencies:
   flutter_test:
@@ -34,3 +41,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  # Add assets folder
+  assets:
+    - assets/animations/
