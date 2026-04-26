@@ -30,7 +30,7 @@ class Exercise {
   int duration;
   int reps;
   String instructions;
-  String animationPath;  // Path to Lottie JSON file
+  String animationPath; // Path to Lottie JSON file
 
   Exercise({
     required this.name,
