@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import '../data/workout_data.dart';
 import '../models/workout_model.dart';
+import '../services/progress_service.dart';
+import '../data/progress_data.dart';
+
 class WorkoutDetailScreen extends StatefulWidget {
   final String workoutId;
   const WorkoutDetailScreen({super.key, required this.workoutId});
@@ -24,7 +27,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
   void initState() {
     super.initState();
     _workout = WorkoutData.getWorkouts().firstWhere(
-          (w) => w.id == widget.workoutId,
+      (w) => w.id == widget.workoutId,
     );
     _completedExercises = List.filled(_workout.exercises.length, false);
   }
@@ -122,7 +125,8 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.error_outline, size: 50, color: Colors.orange),
+                            Icon(Icons.error_outline,
+                                size: 50, color: Colors.orange),
                             SizedBox(height: 10),
                             Text('Animation not found'),
                           ],
@@ -135,31 +139,38 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
               const SizedBox(height: 20),
               Text(
                 exercise.name,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               if (exercise.reps > 0)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.orange.shade100,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
                     '${exercise.reps} REPETITIONS',
-                    style: TextStyle(color: Colors.orange.shade700, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.orange.shade700,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               if (exercise.duration > 0)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.blue.shade100,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
                     '${exercise.duration} SECONDS',
-                    style: TextStyle(color: Colors.blue.shade700, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.blue.shade700,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               const SizedBox(height: 15),
@@ -197,7 +208,18 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
     );
   }
 
-  void _completeWorkout() {
+  void _completeWorkout() async {
+    final progressService = ProgressService();
+    await progressService.addProgress(
+      ProgressData(
+        id: '',
+        date: DateTime.now(),
+        duration: _workout.duration,
+        calories: _workout.calories,
+        xp: _workout.xpReward,
+      ),
+    );
+    // 🔽 EXISTING CODE (UNCHANGED)
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -276,7 +298,10 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                   children: [
                     const Text(
                       'CURRENT EXERCISE',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12),
                     ),
                     const SizedBox(height: 10),
                     Text(
@@ -297,12 +322,17 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                           height: 140,
                           child: CircularProgressIndicator(
                             value: _timeRemaining /
-                                (_workout.exercises[_currentExerciseIndex].duration > 0
-                                    ? _workout.exercises[_currentExerciseIndex].duration.toDouble()
+                                (_workout.exercises[_currentExerciseIndex]
+                                            .duration >
+                                        0
+                                    ? _workout.exercises[_currentExerciseIndex]
+                                        .duration
+                                        .toDouble()
                                     : 30),
                             strokeWidth: 10,
                             backgroundColor: Colors.white30,
-                            valueColor: const AlwaysStoppedAnimation(Colors.white),
+                            valueColor:
+                                const AlwaysStoppedAnimation(Colors.white),
                           ),
                         ),
                         Column(
@@ -317,7 +347,8 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                             ),
                             const Text(
                               'seconds',
-                              style: TextStyle(color: Colors.white70, fontSize: 12),
+                              style: TextStyle(
+                                  color: Colors.white70, fontSize: 12),
                             ),
                           ],
                         ),
@@ -350,17 +381,22 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                       child: ListTile(
                         leading: CircleAvatar(
                           radius: 25,
-                          backgroundColor: isCompleted ? Colors.green : Colors.orange.shade100,
+                          backgroundColor: isCompleted
+                              ? Colors.green
+                              : Colors.orange.shade100,
                           child: Icon(
                             isCompleted ? Icons.check : Icons.fitness_center,
                             size: 25,
-                            color: isCompleted ? Colors.white : Colors.orange.shade700,
+                            color: isCompleted
+                                ? Colors.white
+                                : Colors.orange.shade700,
                           ),
                         ),
                         title: Text(
                           exercise.name,
                           style: TextStyle(
-                            decoration: isCompleted ? TextDecoration.lineThrough : null,
+                            decoration:
+                                isCompleted ? TextDecoration.lineThrough : null,
                             color: isCompleted ? Colors.grey : Colors.black,
                             fontWeight: FontWeight.w500,
                           ),
@@ -371,11 +407,13 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                               : '${exercise.duration} seconds',
                         ),
                         trailing: isCompleted
-                            ? const Icon(Icons.check_circle, color: Colors.green, size: 28)
+                            ? const Icon(Icons.check_circle,
+                                color: Colors.green, size: 28)
                             : IconButton(
-                          icon: const Icon(Icons.play_circle, color: Colors.orange, size: 32),
-                          onPressed: () => _showExerciseDialog(),
-                        ),
+                                icon: const Icon(Icons.play_circle,
+                                    color: Colors.orange, size: 32),
+                                onPressed: () => _showExerciseDialog(),
+                              ),
                       ),
                     );
                   }),
@@ -396,7 +434,8 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                         ),
                         child: const Text(
                           'START WORKOUT',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -412,7 +451,8 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                       ),
                       child: const Row(
                         children: [
-                          Icon(Icons.celebration, color: Colors.green, size: 30),
+                          Icon(Icons.celebration,
+                              color: Colors.green, size: 30),
                           SizedBox(width: 15),
                           Expanded(
                             child: Text(

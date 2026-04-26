@@ -9,7 +9,7 @@ class WorkoutData {
         title: '🏃 Full Body Basic',
         description: 'Perfect for beginners. Start your fitness journey here!',
         level: 'basic',
-        duration: 100,
+        duration: 60,
         calories: 150,
         thumbnail: 'https://picsum.photos/id/100/400/200',
         xpReward: 50,
@@ -19,36 +19,46 @@ class WorkoutData {
             name: 'Jumping Jacks',
             duration: 10,
             reps: 0,
-            instructions: 'Stand with feet together, jump and spread legs while clapping overhead',
-            animationPath: 'assets/animations/jumping_jacks.json',  // ✅ Jumping Jacks animation
+            instructions:
+                'Stand with feet together, jump and spread legs while clapping overhead',
+            animationPath:
+                'assets/animations/jumping_jacks.json', // ✅ Jumping Jacks animation
           ),
           Exercise(
             name: 'Squats',
             duration: 10,
             reps: 0,
-            instructions: 'Stand with feet shoulder-width apart, lower body as if sitting back',
-            animationPath: 'assets/animations/squats.json',  // ✅ Squats animation
+            instructions:
+                'Stand with feet shoulder-width apart, lower body as if sitting back',
+            animationPath:
+                'assets/animations/squats.json', // ✅ Squats animation
           ),
           Exercise(
             name: 'Military Push Ups',
             duration: 10,
             reps: 0,
-            instructions: 'Keep body straight, lower chest to ground, elbows at 45 degrees',
-            animationPath: 'assets/animations/Military_PushUps.json',  // ✅ Push ups animation
+            instructions:
+                'Keep body straight, lower chest to ground, elbows at 45 degrees',
+            animationPath:
+                'assets/animations/Military_PushUps.json', // ✅ Push ups animation
           ),
           Exercise(
             name: 'Explosive Lunges',
             duration: 10,
             reps: 0,
-            instructions: 'Step forward, lower hips, jump and switch legs in mid-air',
-            animationPath: 'assets/animations/Explosive_Lunges.json',  // ✅ Lunges animation
+            instructions:
+                'Step forward, lower hips, jump and switch legs in mid-air',
+            animationPath:
+                'assets/animations/Explosive_Lunges.json', // ✅ Lunges animation
           ),
           Exercise(
             name: 'Inchworm',
             duration: 10,
             reps: 0,
-            instructions: 'Bend over, walk hands forward to plank, walk feet to hands',
-            animationPath: 'assets/animations/inchworm.json',  // ✅ Inchworm animation
+            instructions:
+                'Bend over, walk hands forward to plank, walk feet to hands',
+            animationPath:
+                'assets/animations/inchworm.json', // ✅ Inchworm animation
           ),
         ],
       ),
@@ -115,7 +125,8 @@ class WorkoutData {
             name: 'Inchworm',
             duration: 30,
             reps: 8,
-            instructions: 'Bend over, walk hands out to plank, walk feet to hands',
+            instructions:
+                'Bend over, walk hands out to plank, walk feet to hands',
             animationPath: 'assets/animations/inchworm.json',
           ),
           Exercise(
